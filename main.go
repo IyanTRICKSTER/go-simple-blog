@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
-	"go-simple-blog/dataSource"
+	"go-simple-blog/database"
 	"go-simple-blog/entities"
 	"go-simple-blog/handlers"
 	"go-simple-blog/repositories"
@@ -21,7 +21,7 @@ func main() {
 		log.Fatalf("Error loading .env file")
 	}
 
-	db := dataSource.Database{
+	db := database.Database{
 		Host:     os.Getenv("DB_HOST"),
 		Username: os.Getenv("DB_USER"),
 		Password: os.Getenv("DB_PASSWORD"),
@@ -41,7 +41,7 @@ func main() {
 	_ = db.MigrateTable(entities.User{})
 
 	//Run Seeders
-	_ = db.Seed(dataSource.UserSeedData())
+	_ = db.Seed(database.UserSeedData())
 
 	//Setup Cloud Storage Service
 	wd, _ := os.Getwd()
